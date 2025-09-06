@@ -1,6 +1,8 @@
 package com.aurora.utils;
 
 import com.aurora.common.RedisConstants;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,8 +10,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
-import javax.mail.*;
-import javax.mail.internet.MimeMessage;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;

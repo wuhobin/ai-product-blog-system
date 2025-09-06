@@ -1,18 +1,18 @@
 package com.aurora.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.aurora.annotation.OperationLogger;
 import com.aurora.common.Result;
 import com.aurora.entity.SysRole;
 import com.aurora.service.SysRoleService;
 import com.aurora.utils.FastExcelUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class SysRoleController {
 
     private final SysRoleService sysRoleService;
 
-    @GetMapping
+    @GetMapping("/")
     @Operation(summary = "获取角色列表")
     public Result<IPage<SysRole>> listRoles(@RequestParam(required = false) String name) {
         return Result.success(sysRoleService.listRoles(name));

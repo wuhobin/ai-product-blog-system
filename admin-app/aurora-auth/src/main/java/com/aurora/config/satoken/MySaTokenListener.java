@@ -1,7 +1,7 @@
 package com.aurora.config.satoken;
 
 import cn.dev33.satoken.listener.SaTokenListener;
-import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.hutool.json.JSONUtil;
 import com.aurora.common.RedisConstants;
 import com.aurora.entity.SysUser;
@@ -10,12 +10,12 @@ import com.aurora.utils.IpUtils;
 import com.aurora.utils.RedisUtils;
 import com.aurora.utils.UserAgentUtils;
 import com.aurora.vo.user.OnlineUserVo;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
@@ -37,7 +37,7 @@ public class MySaTokenListener implements SaTokenListener {
 
     /** 每次登录时触发 */
     @Override
-    public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
+    public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter saLoginParameter) {
 
         String ip = IpUtils.getIp();
         SysUser user = userMapper.selectById((Integer) loginId);
@@ -115,10 +115,9 @@ public class MySaTokenListener implements SaTokenListener {
         System.out.println("---------- 自定义侦听器实现 doLogoutSession");
     }
 
-    /** 每次Token续期时触发 */
     @Override
-    public void doRenewTimeout(String tokenValue, Object loginId, long timeout) {
-        System.out.println("---------- 自定义侦听器实现 doRenewTimeout");
+    public void doRenewTimeout(String s, Object o, String s1, long l) {
+
     }
 }
 
