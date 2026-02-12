@@ -11,7 +11,6 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @apiNote
  */
 @Configuration
-@EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
 

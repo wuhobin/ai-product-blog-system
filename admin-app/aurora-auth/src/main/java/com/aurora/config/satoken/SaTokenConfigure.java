@@ -23,7 +23,8 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                         "/v3/api-docs/**",
                         "/swagger-resources",
                         "/localFile/**",
-                        "/error"
+                        "/error",
+                        "/doc.html"
                 );
     }
 }
