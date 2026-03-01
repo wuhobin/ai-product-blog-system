@@ -31,7 +31,8 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                         "/error",
                         "/doc.html",
                         "/doc.html/**",
-                        "/favicon.ico"
+                        "/favicon.ico",
+                        "/bizFlow/test"
                 );
     }
 }
