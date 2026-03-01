@@ -182,7 +182,7 @@
     <!-- 页脚版权信息 -->
     <footer class="footer">
       <div class="footer-content">
-        <p>Copyright © 2024 Neat-Admin</p>
+        <p>Copyright © 2024 Aurora-Admin</p>
         <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">
           湘ICP备2022002110号-1
         </a>

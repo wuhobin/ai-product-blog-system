@@ -30,7 +30,7 @@ export const useSettingsStore = defineStore({
     dynamicTitle: false,
     greyMode: false,
     showFooter: true,
-    title: 'Neat Admin'
+    title: 'Aurora Admain'
   }),
 
   actions: {
@@ -165,7 +165,7 @@ export const useSettingsStore = defineStore({
         dynamicTitle: false,
         greyMode: false,
         showFooter: true,
-        title: 'Neat Admin'
+        title: 'Aurora Admain'
       }
       this.saveSettings(defaultSettings)
     },

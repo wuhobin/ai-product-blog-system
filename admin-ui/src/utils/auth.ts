@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'Neat-Admin-Token'
+const TokenKey = 'Aurora-Admin-Token'
 
 // 设置token到cookie，过期时间1小时
 export function setToken(token: string) {
