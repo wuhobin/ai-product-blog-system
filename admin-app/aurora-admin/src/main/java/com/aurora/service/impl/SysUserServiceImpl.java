@@ -1,34 +1,33 @@
 package com.aurora.service.impl;
 
+import cn.dev33.satoken.secure.BCrypt;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.aurora.common.RedisConstants;
+import com.aurora.dto.user.UpdatePwdDTO;
 import com.aurora.dto.user.UserSaveOrUpdateDto;
-import com.aurora.mapper.SysRoleMapper;
-import com.aurora.utils.PageUtils;
 import com.aurora.entity.SysUser;
 import com.aurora.exception.BusinessException;
+import com.aurora.mapper.SysRoleMapper;
 import com.aurora.mapper.SysUserMapper;
 import com.aurora.service.SysUserService;
+import com.aurora.utils.PageUtils;
 import com.aurora.utils.RedisUtils;
 import com.aurora.vo.user.OnlineUserVo;
 import com.aurora.vo.user.SysUserPageListVo;
 import com.aurora.vo.user.SysUserProfileVo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import cn.dev33.satoken.secure.BCrypt;
-import cn.dev33.satoken.stp.StpUtil;
-import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import com.aurora.dto.user.UpdatePwdDTO;
 
 @Service
 @RequiredArgsConstructor
