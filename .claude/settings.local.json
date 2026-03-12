@@ -28,7 +28,10 @@
       "Bash(java -version 2>&1)",
       "Bash(mvn -version 2>&1)",
       "Bash(cd \"E:/Idea Projects/AI项目/ai-product-blog-system/admin-app\" && set \"JAVA_HOME=D:\\\\Program Files\\\\Java\\\\jdk-17\" && mvn clean compile 2>&1 | tail -30)",
-      "Bash(where java:*)"
+      "Bash(where java:*)",
+      "Bash(netstat -ano | grep 8800)",
+      "Bash(cmd //c \"taskkill /PID 194572 /F\")",
+      "Bash(netstat -ano | grep 8800 || echo \"端口已释放\")"
     ]
   }
 }
