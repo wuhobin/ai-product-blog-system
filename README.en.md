@@ -29,7 +29,7 @@ Aurora Admin is a backend management system based on Spring Boot and Sa-Token, p
    ```
 
 2. Import the database:
-   Import the database using the `aurora-admin.sql` file
+   Import the database using the `ai-product-blog-system.sql` file
 
 3. Modify configuration:
    Update the database connection information in `admin-app/aurora-server/src/main/resources/application.properties`

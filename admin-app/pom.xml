@@ -12,6 +12,7 @@
     <modules>
         <module>aurora-common</module>
         <module>aurora-admin</module>
+        <module>aurora-api</module>
         <module>aurora-server</module>
         <module>aurora-file</module>
         <module>aurora-quartz</module>

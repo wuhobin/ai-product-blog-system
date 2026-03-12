@@ -126,7 +126,7 @@ mysql -u root -p
 # 创建数据库并导入
 CREATE DATABASE aurora_admin CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE aurora_admin;
-SOURCE aurora-admin.sql;
+SOURCE ai-product-blog-system.sql;
 ```
 
 3. 修改配置文件

@@ -16,8 +16,8 @@ const geistMono = localFont({
 })
 
 export const metadata: Metadata = {
-  title: "Aurora Admin",
-  description: "Enterprise admin system built with Next.js and shadcn/ui",
+  title: "CodeHub - 技术博客社区",
+  description: "CodeHub 是一个技术博客社区，汇聚优质技术文章、开源项目和开发者交流",
 }
 
 export default function RootLayout({

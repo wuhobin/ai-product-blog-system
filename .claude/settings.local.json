@@ -17,7 +17,18 @@
       "Bash(node:*)",
       "Bash(rm:*)",
       "Bash(npx create-next-app@latest:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(claude mcp:*)",
+      "Bash(cmd /c \"claude mcp add -s user zai-mcp-server --env Z_AI_API_KEY=a9964ff75fcc4d83a0748665efbefbf1.ZMWSHwSpIgxyFuw2 -- npx -y \\\\\"@z_ai/mcp-server\\\\\"\")",
+      "Bash(powershell -Command \"claude mcp add -s user zai-mcp-server --env Z_AI_API_KEY=a9964ff75fcc4d83a0748665efbefbf1.ZMWSHwSpIgxyFuw2 -- npx -y '@z_ai/mcp-server'\")",
+      "Bash(where bash:*)",
+      "Bash(python \"C:/Users/admin/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"admin login button modern professional\" --stack shadcn --design-system)",
+      "Bash(cd \"E:/Idea Projects/AI项目/ai-product-blog-system/admin-app\" && mvn compile -q 2>&1 | head -100)",
+      "Bash(cd \"E:/Idea Projects/AI项目/ai-product-blog-system/admin-app\" && mvn compile 2>&1 | grep -A 5 \"error:\")",
+      "Bash(java -version 2>&1)",
+      "Bash(mvn -version 2>&1)",
+      "Bash(cd \"E:/Idea Projects/AI项目/ai-product-blog-system/admin-app\" && set \"JAVA_HOME=D:\\\\Program Files\\\\Java\\\\jdk-17\" && mvn clean compile 2>&1 | tail -30)",
+      "Bash(where java:*)"
     ]
   }
 }
