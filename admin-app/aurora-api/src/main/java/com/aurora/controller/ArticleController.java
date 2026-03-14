@@ -1,13 +1,13 @@
 package com.aurora.controller;
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.aurora.annotation.SaUserCheckLogin;
 import com.aurora.common.Result;
 import com.aurora.dto.article.ArticleQueryDTO;
 import com.aurora.dto.article.ArticleSaveDTO;
 import com.aurora.service.ArticleService;
 import com.aurora.vo.article.ArticleDetailVO;
 import com.aurora.vo.article.ArticleListVO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -65,14 +65,14 @@ public class ArticleController {
     }
 
     @PostMapping
-    @SaCheckLogin
+    @SaUserCheckLogin
     @Operation(summary = "创建文章")
     public Result<Long> save(@RequestBody @Validated ArticleSaveDTO saveDTO) {
         return Result.success(articleService.saveArticle(saveDTO));
     }
 
     @PutMapping("/{id}")
-    @SaCheckLogin
+    @SaUserCheckLogin
     @Operation(summary = "更新文章")
     public Result<Void> update(@PathVariable Long id, @RequestBody @Validated ArticleSaveDTO saveDTO) {
         articleService.updateArticle(id, saveDTO);
@@ -80,7 +80,7 @@ public class ArticleController {
     }
 
     @DeleteMapping("/{id}")
-    @SaCheckLogin
+    @SaUserCheckLogin
     @Operation(summary = "删除文章")
     public Result<Void> delete(@PathVariable Long id) {
         articleService.deleteArticle(id);
@@ -88,7 +88,7 @@ public class ArticleController {
     }
 
     @PostMapping("/{id}/like")
-    @SaCheckLogin
+    @SaUserCheckLogin
     @Operation(summary = "点赞文章")
     public Result<Void> like(@PathVariable Long id) {
         articleService.likeArticle(id);
@@ -96,7 +96,7 @@ public class ArticleController {
     }
 
     @DeleteMapping("/{id}/like")
-    @SaCheckLogin
+    @SaUserCheckLogin
     @Operation(summary = "取消点赞")
     public Result<Void> unlike(@PathVariable Long id) {
         articleService.unlikeArticle(id);
@@ -104,7 +104,7 @@ public class ArticleController {
     }
 
     @PostMapping("/{id}/favorite")
-    @SaCheckLogin
+    @SaUserCheckLogin
     @Operation(summary = "收藏文章")
     public Result<Void> favorite(@PathVariable Long id) {
         articleService.favoriteArticle(id);
@@ -112,7 +112,7 @@ public class ArticleController {
     }
 
     @DeleteMapping("/{id}/favorite")
-    @SaCheckLogin
+    @SaUserCheckLogin
     @Operation(summary = "取消收藏")
     public Result<Void> unfavorite(@PathVariable Long id) {
         articleService.unfavoriteArticle(id);

@@ -1,6 +1,6 @@
 package com.aurora.service.impl;
 
-import cn.dev33.satoken.stp.StpUtil;
+import com.aurora.config.StpUserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -59,7 +59,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         ArticleDetailVO vo = convertToDetailVO(article);
 
-        Long currentUserId = StpUtil.getLoginIdAsLong();
+        Long currentUserId = StpUserUtil.getLoginIdAsLong();
         if (currentUserId != null) {
             LambdaQueryWrapper<ArticleLike> likeWrapper = new LambdaQueryWrapper<>();
             likeWrapper.eq(ArticleLike::getUserId, currentUserId)
@@ -81,7 +81,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long saveArticle(ArticleSaveDTO saveDTO) {
-        Long userId = StpUtil.getLoginIdAsLong();
+        Long userId = StpUserUtil.getLoginIdAsLong();
 
         Article article = Article.builder()
                 .title(saveDTO.getTitle())
@@ -109,7 +109,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional(rollbackFor = Exception.class)
     public void updateArticle(Long id, ArticleSaveDTO saveDTO) {
         Article article = articleMapper.selectById(id);
-        Long userId = StpUtil.getLoginIdAsLong();
+        Long userId = StpUserUtil.getLoginIdAsLong();
 
         if (article == null || !article.getAuthorId().equals(userId)) {
             throw new RuntimeException("无权限修改此文章");
@@ -133,7 +133,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional(rollbackFor = Exception.class)
     public void deleteArticle(Long id) {
         Article article = articleMapper.selectById(id);
-        Long userId = StpUtil.getLoginIdAsLong();
+        Long userId = StpUserUtil.getLoginIdAsLong();
 
         if (article == null || !article.getAuthorId().equals(userId)) {
             throw new RuntimeException("无权限删除此文章");
@@ -146,7 +146,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void likeArticle(Long articleId) {
-        Long userId = StpUtil.getLoginIdAsLong();
+        Long userId = StpUserUtil.getLoginIdAsLong();
 
         LambdaQueryWrapper<ArticleLike> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ArticleLike::getUserId, userId)
@@ -172,7 +172,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void unlikeArticle(Long articleId) {
-        Long userId = StpUtil.getLoginIdAsLong();
+        Long userId = StpUserUtil.getLoginIdAsLong();
 
         LambdaQueryWrapper<ArticleLike> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ArticleLike::getUserId, userId)
@@ -190,7 +190,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void favoriteArticle(Long articleId) {
-        Long userId = StpUtil.getLoginIdAsLong();
+        Long userId = StpUserUtil.getLoginIdAsLong();
 
         LambdaQueryWrapper<ArticleFavorite> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ArticleFavorite::getUserId, userId)
@@ -216,7 +216,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void unfavoriteArticle(Long articleId) {
-        Long userId = StpUtil.getLoginIdAsLong();
+        Long userId = StpUserUtil.getLoginIdAsLong();
 
         LambdaQueryWrapper<ArticleFavorite> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ArticleFavorite::getUserId, userId)

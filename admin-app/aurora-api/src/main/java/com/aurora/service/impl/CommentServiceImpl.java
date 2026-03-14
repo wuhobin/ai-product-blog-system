@@ -1,7 +1,7 @@
 package com.aurora.service.impl;
 
-import cn.dev33.satoken.stp.StpUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
+import com.aurora.config.StpUserUtil;
 import com.aurora.dto.article.CommentSaveDTO;
 import com.aurora.entity.Article;
 import com.aurora.entity.Comment;
@@ -11,6 +11,7 @@ import com.aurora.mapper.CommentMapper;
 import com.aurora.mapper.SysUserMapper;
 import com.aurora.service.CommentService;
 import com.aurora.vo.article.CommentVO;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,7 +69,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long saveComment(CommentSaveDTO saveDTO) {
-        Long userId = StpUtil.getLoginIdAsLong();
+        Long userId = StpUserUtil.getLoginIdAsLong();
 
         Long parentId = saveDTO.getParentId() != null ? saveDTO.getParentId() : 0L;
 
@@ -97,7 +98,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteComment(Long id) {
-        Long userId = StpUtil.getLoginIdAsLong();
+        Long userId = StpUserUtil.getLoginIdAsLong();
 
         Comment comment = commentMapper.selectById(id);
         if (comment == null || !comment.getUserId().equals(userId)) {

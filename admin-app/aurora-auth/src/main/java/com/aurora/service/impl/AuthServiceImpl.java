@@ -4,6 +4,7 @@ import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.json.JSONUtil;
 import com.aurora.common.Constants;
+import com.aurora.config.StpUserUtil;
 import com.aurora.common.RedisConstants;
 import com.aurora.common.ResultCode;
 import com.aurora.dto.LoginDTO;
@@ -139,8 +140,9 @@ public class AuthServiceImpl implements AuthService {
 
         LoginUserInfo loginUserInfo = JSONUtil.toBean(JSONUtil.parseObj(value), LoginUserInfo.class);
 
-        StpUtil.login(loginUserInfo.getId());
-        loginUserInfo.setToken(StpUtil.getTokenValue());
+        // 前台用户登录：使用 StpUserUtil，与后台管理员隔离
+        StpUserUtil.login(loginUserInfo.getId());
+        loginUserInfo.setToken(StpUserUtil.getTokenValue());
 
         return loginUserInfo;
     }

@@ -1,6 +1,6 @@
 package com.aurora.controller;
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
+import com.aurora.annotation.SaUserCheckLogin;
 import com.aurora.common.Result;
 import com.aurora.dto.article.CommentSaveDTO;
 import com.aurora.service.CommentService;
@@ -33,14 +33,14 @@ public class CommentController {
     }
 
     @PostMapping
-    @SaCheckLogin
+    @SaUserCheckLogin
     @Operation(summary = "发表评论")
     public Result<Long> save(@RequestBody @Validated CommentSaveDTO saveDTO) {
         return Result.success(commentService.saveComment(saveDTO));
     }
 
     @DeleteMapping("/{id}")
-    @SaCheckLogin
+    @SaUserCheckLogin
     @Operation(summary = "删除评论")
     public Result<Void> delete(@PathVariable Long id) {
         commentService.deleteComment(id);
