@@ -18,6 +18,8 @@ sa-token:
   token-style: uuid
   # 是否输出操作日志
   is-log: true
+  # 关闭Cookie模式
+  isReadCookie: false
 
 #==============================mybatis-plus配置=========================
 mybatis-plus:
