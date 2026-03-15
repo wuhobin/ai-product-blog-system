@@ -1,7 +1,9 @@
 package com.aurora.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.aurora.annotation.SaUserCheckLogin;
 import com.aurora.common.Result;
+import com.aurora.config.StpUserUtil;
 import com.aurora.dto.LoginDTO;
 import com.aurora.dto.user.LoginUserInfo;
 import com.aurora.service.AuthService;
@@ -46,5 +48,13 @@ public class AuthController {
     @GetMapping("/auth/wechat/isLogin/{loginCode}")
     public Result<LoginUserInfo> getWechatIsLogin(@PathVariable String loginCode){
         return Result.success(authService.getWechatIsLogin(loginCode));
+    }
+
+    @Operation(summary = "前台用户退出登录")
+    @GetMapping("/auth/user/logout")
+    @SaUserCheckLogin
+    public Result<Void> userLogout() {
+        StpUserUtil.logout();
+        return Result.success(null);
     }
 }

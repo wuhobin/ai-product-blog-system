@@ -135,7 +135,7 @@ public class AuthServiceImpl implements AuthService {
         Object value = redisUtil.get(RedisConstants.WX_LOGIN_USER + loginCode);
 
         if (value == null) {
-            throw new BusinessException("登录失败");
+            throw new BusinessException(ResultCode.NOT_LOGIN);
         }
 
         LoginUserInfo loginUserInfo = JSONUtil.toBean(JSONUtil.parseObj(value), LoginUserInfo.class);

@@ -1,12 +1,12 @@
 // User types
 export interface User {
-  id: string
-  email: string
-  name: string
+  id: number
+  username: string
+  nickname: string
   avatar?: string
-  roles: string[]
-  createdAt: string
-  updatedAt: string
+  token?: string
+  permissions?: string[] | null
+  roles?: string[] | null
 }
 
 export interface LoginRequest {

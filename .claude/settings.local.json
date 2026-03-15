@@ -31,7 +31,8 @@
       "Bash(where java:*)",
       "Bash(netstat -ano | grep 8800)",
       "Bash(cmd //c \"taskkill /PID 194572 /F\")",
-      "Bash(netstat -ano | grep 8800 || echo \"端口已释放\")"
+      "Bash(netstat -ano | grep 8800 || echo \"端口已释放\")",
+      "Bash(npx shadcn@latest add dropdown-menu -y)"
     ]
   }
 }

@@ -53,6 +53,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                         "/wx/portal",
                         "/auth/wechat/getCode",
                         "/auth/wechat/isLogin/**",
+                        "/auth/user/logout",
                         "/api/**"
                 );
     }

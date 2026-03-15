@@ -11,10 +11,18 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog"
-import { BookOpen, QrCode, RefreshCw, Users, Sparkles, Code2, MessageCircle, PenTool } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { BookOpen, QrCode, RefreshCw, Users, Sparkles, Code2, MessageCircle, PenTool, LogOut } from "lucide-react"
 import { useUserStore } from "@/store/user"
 import { useAuth } from "@/hooks/use-auth"
 import { checkWechatLoginStatus } from "@/lib/wechat-auth"
+import Link from "next/link"
 
 const WechatLoginPage = () => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false)
@@ -22,7 +30,7 @@ const WechatLoginPage = () => {
   const [isChecking, setIsChecking] = useState<boolean>(false)
   const pollingRef = useRef<NodeJS.Timeout | null>(null)
 
-  const { setUser, setToken } = useUserStore()
+  const { user, isAuthenticated, setUser, setToken, logout } = useUserStore()
   const { wechatLogin } = useAuth()
 
   // 弹窗打开时获取验证码
@@ -64,11 +72,16 @@ const WechatLoginPage = () => {
         setIsChecking(true)
         const response = await checkWechatLoginStatus(loginCode)
 
+        // ─────────────────────────────────────────────────────
+        // API 返回格式: { id, username, nickname, avatar, token, ... }
+        // data 直接是用户对象，token 在 data 内
+        // ─────────────────────────────────────────────────────
         if (response.code === 200 && response.data) {
-          const { user, token } = response.data as { user: any; token: string }
+          const userData = response.data as any
+          const { token } = userData
 
-          if (user && token) {
-            setUser(user)
+          if (userData && token) {
+            setUser(userData)
             setToken(token)
 
             if (pollingRef.current) {
@@ -125,12 +138,12 @@ const WechatLoginPage = () => {
       {/* Header */}
       <header className="border-b bg-background/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
               <BookOpen className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-xl font-bold">CodeHub</h1>
-          </div>
+          </Link>
           <div className="flex items-center gap-3">
             <nav className="hidden md:flex items-center gap-6 text-sm">
               <a href="#" className="text-foreground hover:text-primary transition-colors">
@@ -143,12 +156,40 @@ const WechatLoginPage = () => {
                 专栏
               </a>
             </nav>
-            <button
-              onClick={() => setDialogOpen(true)}
-              className="cursor-pointer rounded-full px-5 py-2 text-sm font-medium border border-primary/30 bg-background hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white hover:border-transparent transition-all duration-200"
-            >
-              登录 / 注册
-            </button>
+            {/* ─────────────────────────────────────────────────────
+                用户状态：已登录显示头像，未登录显示登录按钮
+               ───────────────────────────────────────────────────── */}
+            {isAuthenticated && user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="flex items-center gap-2 cursor-pointer rounded-full p-0.5 hover:ring-2 hover:ring-primary/50 transition-all">
+                    <img
+                      src={user.avatar || `https://api.dicebear.com/6.x/pixel-art/svg?seed=${user.username}`}
+                      alt={user.nickname}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <div className="px-2 py-1.5 text-sm font-medium">{user.nickname}</div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={logout}
+                    className="text-red-600 dark:text-red-400 cursor-pointer"
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    退出登录
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <button
+                onClick={() => setDialogOpen(true)}
+                className="cursor-pointer rounded-full px-5 py-2 text-sm font-medium border border-primary/30 bg-background hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white hover:border-transparent transition-all duration-200"
+              >
+                登录 / 注册
+              </button>
+            )}
             <ThemeToggle />
           </div>
         </div>

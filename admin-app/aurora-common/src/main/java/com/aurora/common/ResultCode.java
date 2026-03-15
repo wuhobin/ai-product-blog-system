@@ -10,7 +10,7 @@ public enum ResultCode {
 
     ERROR_DEFAULT(500,"系统繁忙，请稍后重试"),
 
-    NOT_LOGIN(401, "当前会话已过期，请重新登录"),
+    NOT_LOGIN(401, "未登录，请重新登录"),
 
     NO_PERMISSION(-7,"无权限"),
 

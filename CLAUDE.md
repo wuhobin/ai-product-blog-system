@@ -14,9 +14,18 @@ cd aurora-server
 mvn spring-boot:run
 ```
 
-### 前端 (aurora-frontend/)
+### 前端  
+
+#### 前台社区(aurora-frontend/)
 ```bash
 cd aurora-frontend
+npm install
+npm run dev
+```
+
+#### 后台管理系统(admin-ui/)
+```bash
+cd admin-ui
 npm install
 npm run dev
 ```
@@ -44,7 +53,8 @@ admin-app/
 ### 认证配置
 - `SaTokenConfigure` 在 `aurora-auth` 模块
 - 拦截 `/**`，排除 `/auth/login`、`/swagger-ui/**`、`/doc.html`、`/localFile/**` 等
-- 写操作通过 `@SaCheckLogin` 注解控制
+- 后台写操作通过 `@SaCheckLogin` 注解控制
+- 前台写操作通过 `@SaUserCheckLogin` 注解控制
 
 ## 数据库
 

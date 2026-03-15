@@ -20,7 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*") // 允许所有跨域地址
+                .allowedOriginPatterns("*") // 使用 patterns 替代 origins，支持 credentials
                 .allowedHeaders("*")
                 .allowedMethods("*")
                 .maxAge(3600);
