@@ -18,7 +18,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { BookOpen, LogOut, User, QrCode, PenTool, Code2, Users, MessageCircle, Sparkles } from "lucide-react"
+import { BookOpen, LogOut, User, QrCode, PenTool, Code2, Users, MessageCircle, Sparkles, ArrowRight } from "lucide-react"
+import { ArticleList } from "@/components/article/ArticleList"
+import { getMockArticles } from "@/mock/articles"
+import type { ArticleListVO, PageResponse } from "@/types/article"
 import { useUserStore } from "@/store/user"
 import { useAuth } from "@/hooks/use-auth"
 import { checkWechatLoginStatus } from "@/lib/wechat-auth"
@@ -30,6 +33,23 @@ export default function HomePage() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [loginCode, setLoginCode] = useState("")
   const pollingRef = useRef<NodeJS.Timeout | null>(null)
+
+  // 文章列表数据
+  const [data, setData] = useState<PageResponse<ArticleListVO>>()
+  const [loading, setLoading] = useState(true)
+
+  // 加载文章数据
+  useEffect(() => {
+    setLoading(true)
+    getMockArticles({ pageNum: 1, pageSize: 6 })
+      .then(setData)
+      .finally(() => setLoading(false))
+  }, [])
+
+  // 加载更多
+  const handleLoadMore = async (page: number) => {
+    return getMockArticles({ pageNum: page, pageSize: 6 })
+  }
 
   // ─────────────────────────────────────────────────────
   // 弹窗打开时获取验证码
@@ -98,7 +118,7 @@ export default function HomePage() {
         pollingRef.current = null
       }
     }
-  }, [loginCode, dialogOpen, setUser, setToken])
+  }, [dialogOpen, setUser, setToken])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
@@ -116,7 +136,7 @@ export default function HomePage() {
               <a href="/" className="text-foreground hover:text-primary transition-colors">
                 首页
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="/articles" className="text-muted-foreground hover:text-primary transition-colors">
                 文章
               </a>
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
@@ -169,16 +189,69 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-center min-h-[500px]">
-          <div className="text-center space-y-4">
-            <h2 className="text-3xl font-bold">
-              {isAuthenticated && user ? `欢迎回来，${user.nickname}！` : "探索技术，分享成长"}
-            </h2>
-            <p className="text-muted-foreground">
-              {isAuthenticated && user ? "开始你的技术之旅" : "点击右上角「登录 / 注册」按钮加入社区"}
-            </p>
-          </div>
+        {/* 欢迎区域 */}
+        <div className="text-center space-y-4 mb-12">
+          <h2 className="text-3xl font-bold">
+            {isAuthenticated && user ? `欢迎回来，${user.nickname}！` : "探索技术，分享成长"}
+          </h2>
+          <p className="text-muted-foreground">
+            {isAuthenticated && user ? "开始你的技术之旅" : "点击右上角「登录 / 注册」按钮加入社区"}
+          </p>
+          <Link
+            href="/articles"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          >
+            浏览文章
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
+
+        {/* 文章列表 */}
+        <section className="max-w-4xl mx-auto">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-bold">最新文章</h3>
+            <Link href="/articles" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              查看更多 →
+            </Link>
+          </div>
+          <div className="bg-card rounded-lg border">
+            <ArticleList initialData={data} onLoadMore={handleLoadMore} />
+          </div>
+        </section>
+
+        {/* 社区特色 */}
+        <section>
+          <h3 className="text-xl font-bold text-center mb-6">社区特色</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-card border rounded-xl p-6 text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                <PenTool className="w-6 h-6 text-primary" />
+              </div>
+              <h4 className="font-semibold mb-2">优质文章</h4>
+              <p className="text-sm text-muted-foreground">
+                高质量技术内容，覆盖前后端、架构、AI 等领域
+              </p>
+            </div>
+            <div className="bg-card border rounded-xl p-6 text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                <Users className="w-6 h-6 text-primary" />
+              </div>
+              <h4 className="font-semibold mb-2">技术交流</h4>
+              <p className="text-sm text-muted-foreground">
+                与志同道合的开发者交流，共同成长
+              </p>
+            </div>
+            <div className="bg-card border rounded-xl p-6 text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                <Code2 className="w-6 h-6 text-primary" />
+              </div>
+              <h4 className="font-semibold mb-2">开源项目</h4>
+              <p className="text-sm text-muted-foreground">
+                实战代码示例，助你快速上手新技术
+              </p>
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* 登录弹窗 */}

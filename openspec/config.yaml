@@ -1,20 +1,89 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  Aurora CodeHub 技术博客社区 - OpenSpec 配置
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+context: |
+  # 项目概述
+  Aurora CodeHub 是一个技术博客社区系统，采用前后端分离架构。
+
+  # 技术栈
+
+  ## 后端 (admin-app/)
+  - Java 17 + Spring Boot 3.1.0
+  - MyBatis-Plus 3.5.5 (ORM)
+  - Sa-Token 1.44.0 (多端认证：后台管理员 + 前台用户)
+  - Knife4j 4.5.0 (OpenAPI 文档，访问 /doc.html)
+  - Redis (Sa-Token 会话存储)
+  - Hutool 5.8.26 (工具库)
+  - Maven 多模块架构
+
+  ## 前台社区 (aurora-frontend/)
+  - Next.js 15 + React 19 RC
+  - TypeScript 5
+  - Tailwind CSS + shadcn/ui 组件模式
+  - Zustand (状态管理)
+  - TanStack Query (数据请求)
+  - React Hook Form + Zod (表单验证)
+  - 微信扫码登录
+
+  ## 后台管理 (admin-ui/)
+  - Vue 3 + Vite 4
+  - Element Plus
+  - Pinia (状态管理)
+  - ECharts (图表)
+  - mavon-editor (Markdown 编辑器)
+
+  # 架构约定
+
+  ## 后端模块划分
+  - aurora-common: 公共实体、工具类、配置
+  - aurora-auth: Sa-Token 认证配置
+  - aurora-admin: 后台管理接口
+  - aurora-api: 前台 API (文章、评论、标签、分类)
+  - aurora-quartz: 定时任务
+  - aurora-file: 文件上传
+  - aurora-server: 启动入口，聚合所有模块
+
+  ## API 规范
+  - RESTful 风格
+  - 统一响应包装: Result<T>
+  - 分页: MyBatis-Plus IPage
+  - DTO/VO 模式: 请求数据用 DTO，响应数据用 VO
+  - 认证注解: @SaCheckLogin (后台), @SaUserCheckLogin (前台)
+
+  ## 代码规范
+  - 中文注释 + ASCII 风格分块注释
+  - Lombok 注解 (@RequiredArgsConstructor, @Data 等)
+  - 构造器注入，拒绝 @Autowired 字段注入
+  - Controller 只做参数校验和调用 Service，业务逻辑在 Service 层
+
+  # 端口配置
+  - 后端: 8800
+  - 前台: 3000
+  - 后台管理: 默认 Vite 端口
+
+  # 数据库
+  - SQL 变更文件: ai-product-blog-system.sql (项目根目录)
+  - 主要表: sys_user, sys_role, sys_menu, article, category, tag, comment
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 文档规则
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+rules:
+  proposal:
+    - 明确标注影响范围（后端/前台/后台管理/数据库）
+    - 必须包含"非目标"章节，界定不做的事情
+    - 涉及认证的变更需说明是后台(@SaCheckLogin)还是前台(@SaUserCheckLogin)
+
+  design:
+    - 遵循现有的 DTO/VO 命名约定
+    - 新增 API 需标注 Knife4j 文档注解 (@Tag, @Operation)
+    - 数据库变更需同步到 ai-product-blog-system.sql
+
+  tasks:
+    - 按模块拆分任务：aurora-common → aurora-api/aurora-admin → aurora-frontend/admin-ui
+    - 单个任务粒度：一个接口或一个页面组件
+    - 涉及多端的变更需拆分为独立任务

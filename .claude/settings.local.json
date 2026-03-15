@@ -32,7 +32,15 @@
       "Bash(netstat -ano | grep 8800)",
       "Bash(cmd //c \"taskkill /PID 194572 /F\")",
       "Bash(netstat -ano | grep 8800 || echo \"端口已释放\")",
-      "Bash(npx shadcn@latest add dropdown-menu -y)"
+      "Bash(npx shadcn@latest add dropdown-menu -y)",
+      "Bash(openspec new:*)",
+      "Bash(openspec status:*)",
+      "Bash(openspec instructions:*)",
+      "Bash(head-30)"
+    ],
+    "additionalDirectories": [
+      "e:\\Idea Projects\\AI项目\\ai-product-blog-system\\aurora-frontend\\src\\app\\article",
+      "e:\\Idea Projects\\AI项目\\ai-product-blog-system\\aurora-frontend\\src\\app\\user\\[id]"
     ]
   }
 }
